@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './ui/pages/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './ui/pages/login/login.component';
+import { CreateProductComponent } from './ui/pages/create-product/create-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,
