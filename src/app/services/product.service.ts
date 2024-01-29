@@ -33,7 +33,7 @@ export class ProductService {
       const token = localStorage.getItem('access_token');
       const headers = new HttpHeaders({
         'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       });
       return this.http.post(`${this.apiUrl}/create`, productData, { headers: headers })
 
