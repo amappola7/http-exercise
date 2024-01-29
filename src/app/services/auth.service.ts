@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -27,6 +27,19 @@ export class AuthService {
 
   private getAccessToken(): string | null {
     return localStorage.getItem('access_token');
+  }
+
+  private setHeaders(): HttpHeaders {
+    const token = this.getAccessToken();
+    return new HttpHeaders({
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
+  getAuthenticatedResource(url: string): Observable<any> {
+    const headers = this.setHeaders();
+    return this.http.get(url, {headers: headers})
   }
 
   // Método para validar si el usuario está autenticado o no
