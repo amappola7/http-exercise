@@ -16,6 +16,7 @@ export class CreateProductComponent {
   ) {}
 
   createProduct(): void {
+    
     const productData = {
       productName: this.productName,
       price: this.price,

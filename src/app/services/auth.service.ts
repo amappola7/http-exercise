@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class AuthService {
 
   loginUser(userCredentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, userCredentials)
+    .pipe(catchError((error)=>{
+      return throwError(()=>{error})
+    }))
   }
 
   // Métodos para almacenar y obtener el token de acceso
@@ -52,4 +56,14 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('access_token');
   }
+   private getUser():any{
+    const token = this.getAccessToken();
+    const user =token?JSON.parse(atob(token).split('.')[1]):null;
+    return user;
+  }
+  isAdmin():Boolean{
+  const user=this.getUser()
+    return user && user.role ==='admi';
+  }
+  
 }

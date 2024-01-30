@@ -1,4 +1,7 @@
-import { HttpHeaders, HttpClient, HttpParams } from "@angular/common/http";
+import { HttpHeaders, HttpClient, HttpParams,HttpInterceptor, HttpRequest,
+   HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { catchError } from 'rxjs/operators';
 
 // Headers para antes de iniciar sesión
 const headers: HttpHeaders = new HttpHeaders({
@@ -21,3 +24,16 @@ const body = {
 }
 
 // HttpClient.post('url', body, {params: params, headers: headers}).susbcribe((response) => {}) // Enviando cuerpo y parametros para hacer creación o cambios
+
+ class ErrorInterception implements HttpInterceptor{
+  
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+   // throw new Error("Method not implemented.");
+   return next.handle(req).pipe(
+    catchError((error:HttpErrorResponse)=>{
+      return throwError(()=>{error})
+    })
+   )
+  }
+
+}
