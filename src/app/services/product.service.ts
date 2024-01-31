@@ -29,7 +29,7 @@ export class ProductService {
   }
 
   createProduct(productData: any): Observable<any> {
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isAuthenticated()&& this.authService.isAdmin()) {
       const token = localStorage.getItem('access_token');
       const headers = new HttpHeaders({
         'content-type': 'application/json',

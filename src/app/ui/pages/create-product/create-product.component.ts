@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,11 +13,15 @@ export class CreateProductComponent {
   description!: string;
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private authService:AuthService
   ) {}
 
   createProduct(): void {
-    
+    if(!this.authService.isAdmin()){
+      console.log('Only admin users can create products.');
+      return;
+    }
     const productData = {
       productName: this.productName,
       price: this.price,
